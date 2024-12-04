@@ -2,7 +2,7 @@ import subprocess
 
 # This game uses the keyboard module, which is prompted to automatically install here
 
-try: 
+try:
     import keyboard
 except ImportError:
     input("You are missing a required module. Would you like to automatically install it right now?\nY / N:\t")
@@ -23,8 +23,8 @@ from Pokemon_class import Pokemon, Candy
 
 file = open('first_gen_pokemon.txt', 'r')
 
-pokemon_names = [] # [[charmander, charmeleon, charizard], [pikachu, raichu]]
-pokemon_types = [] # [['fire', 'fire', 'fire/flying'], ['electric', 'electric']]
+pokemon_names = []  # [[charmander, charmeleon, charizard], [pikachu, raichu]]
+pokemon_types = []  # [['fire', 'fire', 'fire/flying'], ['electric', 'electric']]
 
 for line in file:
     names = []
@@ -34,30 +34,30 @@ for line in file:
     # I can probably optimize this much better
 
     if len(data) == 8:
-        for i in range(0,8,2):
+        for i in range(0, 8, 2):
             names.append(data[i])
-        for i in range(1,8,2):
+        for i in range(1, 8, 2):
             types.append(data[i].strip('()'))
         pokemon_names.append(names)
         pokemon_types.append(types)
     elif len(data) == 6:
-        for i in range(0,6,2):
+        for i in range(0, 6, 2):
             names.append(data[i])
-        for i in range(1,6,2):
+        for i in range(1, 6, 2):
             types.append(data[i].strip('()'))
         pokemon_names.append(names)
         pokemon_types.append(types)
     elif len(data) == 4:
-        for i in range(0,4,2):
+        for i in range(0, 4, 2):
             names.append(data[i])
-        for i in range(1,4,2):
+        for i in range(1, 4, 2):
             types.append(data[i].strip('()'))
         pokemon_names.append(names)
         pokemon_types.append(types)
     elif len(data) == 2:
-        for i in range(0,2,2):
+        for i in range(0, 2, 2):
             names.append(data[i])
-        for i in range(1,2,2):
+        for i in range(1, 2, 2):
             types.append(data[i].strip('()'))
         pokemon_names.append(names)
         pokemon_types.append(types)
@@ -67,6 +67,7 @@ inventory = [[], {}, 0]
 
 # This is the inventory access function, containing all the 6 available options to interact with
 
+
 def inventory_interact():
     print("\nAccessing inventory...")
     while True:
@@ -74,14 +75,15 @@ def inventory_interact():
         # First enter a choice
 
         while True:
-            choice = input("\n1:\tDisplay all caught pokemon\n2:\tShow pokemon stats\n3:\tShow available resources\n4:\tPower up a pokemon\n5:\tEvolve a pokemon\n6:\tQuit\n\nWhat would you like to do?:\t")
-            if choice not in ['1','2','3','4','5','6']:
+            choice = input(
+                "\n1:\tDisplay all caught pokemon\n2:\tShow pokemon stats\n3:\tShow available resources\n4:\tPower up a pokemon\n5:\tEvolve a pokemon\n6:\tQuit\n\nWhat would you like to do?:\t")
+            if choice not in ['1', '2', '3', '4', '5', '6']:
                 print("\nPlease enter a valid choice.")
             else:
                 break
 
         # Display all pokemon names on a new line
-        
+
         if choice == '1':
             for i in range(len(inventory[0])):
                 print(f"\n{i+1}:\t {inventory[0][i].get_name()}")
@@ -96,10 +98,12 @@ def inventory_interact():
                         break
                     else:
                         pokemon_choice = int(input("Which pokemon?:\t"))
-                        inventory[0][pokemon_choice-1].display_attributes(inventory, pokemon_names)
+                        inventory[0][pokemon_choice -
+                                     1].display_attributes(inventory, pokemon_names)
                         break
                 except IndexError:
-                    print("Please input a valid choice (You can use menu option 1. to view pokemon)")
+                    print(
+                        "Please input a valid choice (You can use menu option 1. to view pokemon)")
                 except ValueError:
                     print("Please only input integers.")
 
@@ -112,7 +116,7 @@ def inventory_interact():
             print(f"\nAvailable stardust:\t{inventory[2]}")
 
         # Given valid choices, run the power up method
-        
+
         elif choice == '4':
             while True:
                 try:
@@ -127,15 +131,17 @@ def inventory_interact():
                                 possible_increment[i] += random.randint(1, 2)
                                 if possible_increment[i] > 15:
                                     possible_increment[i] = 15
-                        inventory[0][pokemon_choice-1].power_up(inventory, random.randint(50, 150), random.randint(0, 100), possible_increment)
+                        inventory[0][pokemon_choice-1].power_up(inventory, random.randint(
+                            50, 150), random.randint(0, 100), possible_increment)
                         break
                 except IndexError:
-                    print("Please input a valid choice (You can use menu option 1. to view pokemon)")
+                    print(
+                        "Please input a valid choice (You can use menu option 1. to view pokemon)")
                 except ValueError:
                     print("Please only input integers.")
 
         # Given valid choices, run the evolve method
-        
+
         elif choice == '5':
             while True:
                 try:
@@ -150,18 +156,20 @@ def inventory_interact():
                                 stats_increment[i] += random.randint(3, 7)
                                 if stats_increment[i] > 15:
                                     stats_increment[i] = 15
-                        inventory[0][pokemon_choice-1].evolve(inventory, pokemon_names, pokemon_types, random.randint(200, 600), stats_increment)
+                        inventory[0][pokemon_choice-1].evolve(
+                            inventory, pokemon_names, pokemon_types, random.randint(200, 600), stats_increment)
                         break
                 except IndexError:
-                    print("Please input a valid choice (You can use menu option 1. to view pokemon)")
+                    print(
+                        "Please input a valid choice (You can use menu option 1. to view pokemon)")
                 except ValueError:
                     print("Please only input integers.")
 
         # Exit the inventory
-        
+
         elif choice == '6':
             break
-        
+
         # Prompt user to exit inventory after each option
 
         while True:
@@ -174,6 +182,7 @@ def inventory_interact():
                 print("\nPlease enter a valid input.")
         if choice.lower() == 'y':
             break
+
 
 '''
 
@@ -236,7 +245,7 @@ for i in range(height):
             row_list.append('/')
         row_list.append('|')
         map_list.append(row_list)
-        
+
     # Now for each of the 14 other lists not containing our player
     else:
         # Given a 10% chance...
@@ -270,7 +279,7 @@ for i in range(height):
                 row_list.append('/')
             row_list.append('|')
             map_list.append(row_list)
-        
+
 '''
 After we have initialized the map, we will define all our functions
 
@@ -280,6 +289,8 @@ There are many functions, that are sometimes called in other functions, and will
 '''
 
 # Simple print statements in the beginning
+
+
 def print_instructions():
     print("\nWelcome to Py-kemon Go!")
     print("\nBuilt by Ahmed Khaleel and Ali Hussin")
@@ -288,6 +299,8 @@ def print_instructions():
     input("\nEnter any key to start.\t")
 
 # This allows for the display of the map, joining all the lists together
+
+
 def print_map():
     print("\033c")
     # Note: this print statement above is ANSI breakout code to clear the terminal
@@ -297,6 +310,8 @@ def print_map():
     print(''.join(border))
 
 # Row generator, essentially copied from above, but without the player
+
+
 def generate_row():
     row_list = ['|']
     if random.randint(0, 100) < 10:
@@ -321,6 +336,8 @@ def generate_row():
 
 # Column generator in case the player wants to move to the left or right
 # Only difference here is realistically 'width' being swapped with 'height'
+
+
 def generate_column():
     column_list = []
     if random.randint(0, 100) < 10:
@@ -341,13 +358,14 @@ def generate_column():
     return column_list
 
 # Move the map function, given a direction
-def move_map(direction):
 
+
+def move_map(direction):
     '''
     In terms of directions, up and down are relatively the same, with only differences being the '-' or '+'
 
     Therefore, I will only include explanation of the 'up' and 'left' directions
-    '''    
+    '''
 
     # In order to move the map upwards
     if direction == 'up':
@@ -421,6 +439,8 @@ def move_map(direction):
                 map_list[i].insert(-2, new[i])
 
 # This function uses random chances to chose a pokemon from the parsed lists, where a higher evolution is more rare
+
+
 def random_pokemon():
     evolution_chance = random.randint(0, 100)
     chosen_family = pokemon_names[random.randint(0, len(pokemon_names)-1)]
@@ -433,6 +453,8 @@ def random_pokemon():
     return chosen_family[pick]
 
 # This weird function deletes the input buffer from when a player was moving, so that it doesnt input all the keys pressed when they finally interact
+
+
 def clear_buffer():
     try:
         import msvcrt
@@ -443,12 +465,16 @@ def clear_buffer():
         termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 
 # After an interaction is done, we need to remove the '?' or '!' that was around the player
+
+
 def ran_away():
     for i in range(-1, 2):
         map_list[x_y+i][x_x] = '/'
         map_list[x_y][x_x+i] = '/'
 
 # I want this game to be fast paced, and this multiplier quickly increases based on how many pokemon the player has
+
+
 def current_multiplier():
     if len(inventory[0]) % 2 == 0:
         return len(inventory[0])/2
@@ -456,6 +482,8 @@ def current_multiplier():
         return (len(inventory[0])/2)+0.5
 
 # Creation of a pokemon, using our imported classes
+
+
 def find_and_create_pokemon(pokemon_name: str):
     # Given a pokemon name, we need to find its type, and the evolutionary family it belongs to
     x = 0
@@ -469,27 +497,28 @@ def find_and_create_pokemon(pokemon_name: str):
             break
         x += 1
     typ = pokemon_types[x][y]
-    
+
     # To choose our CP, we will guess between 200 and 400 for a start
     # If the player has not caught any pokemon yet
     if current_multiplier() == 0:
         # Simply multiply the guess by the level of his evolution in the family
-        cp = random.randint(200,400)*(y+1)
+        cp = random.randint(200, 400)*(y+1)
     # And otherwise, also multiply it by the current multiplier
     else:
-        cp = int(random.randint(200,400)*(y+1)*current_multiplier()) # EXTREMELY oversimplified initial CP guess
+        # EXTREMELY oversimplified initial CP guess
+        cp = int(random.randint(200, 400)*(y+1)*current_multiplier())
     # Defining our family, being the first pokemon in that group
     family = pokemon_names[x][0]
 
     # Generating our stats, where the guess is between 1 and 4 initially
     randomstats = []
     for i in range(3):
-        j = random.randint(1,4)
+        j = random.randint(1, 4)
         randomstats.append(j)
     # And adjusted if its a higher evolution
     for i in randomstats:
         i = i*(y+1)
-    
+
     # Implementation of a shiny catch, where it is set to 20% of pokemon (I want this to be fast paced)
     if random.randint(0, 100) < 20:
         isShiny = True
@@ -501,17 +530,24 @@ def find_and_create_pokemon(pokemon_name: str):
     return Pokemon(pokemon_name, typ, cp, family, randomstats, isShiny, pokemon_names)
 
 # Catching a pokemon adds it to your inventory, rewards an adjusted amount of stardust, and ann adjusted amount of family candy for that pokemon
+
+
 def catch_pokemon(pokemon_name: str):
     pokemon = find_and_create_pokemon(pokemon_name)
     pokemon.catch(inventory, random.randint(3, 20))
-    inventory[1][pokemon.family].count = int(inventory[1][pokemon.family].count*current_multiplier())
+    inventory[1][pokemon.family].count = int(
+        inventory[1][pokemon.family].count*current_multiplier())
     inventory[2] += int(random.randint(300, 1000)*current_multiplier())
 
 # Checking for an ANSI escape code around the player (useful later)
+
+
 def check_around_x(escape_code: str):
-    return any(map_list[x_y+i][x_x] == escape_code for i in range(-1,2)) or any(map_list[x_y][x_x+i] == escape_code for i in range(-1,2))
+    return any(map_list[x_y+i][x_x] == escape_code for i in range(-1, 2)) or any(map_list[x_y][x_x+i] == escape_code for i in range(-1, 2))
 
 # Attempts capture of a pokemon
+
+
 def attempt_capture():
     clear_buffer()
     found_pokemon = random_pokemon()
@@ -529,13 +565,15 @@ def attempt_capture():
                 while attempts > 1:
                     # And a 20% chance to catch it each attempt
                     if random.randint(0, 100) < 20:
-                        print(f"You have caught the {found_pokemon}! It has been added to your collection.")
+                        print(f"You have caught the {
+                              found_pokemon}! It has been added to your collection.")
                         ran_away()
                         catch_pokemon(found_pokemon)
                         break
                     else:
                         attempts -= 1
-                        print(f"You were not able to catch it.\nAttempts left: {attempts}")
+                        print(
+                            f"You were not able to catch it.\nAttempts left: {attempts}")
                         while True:
                             choice = input("Try again? (Y / N):\t")
                             if choice.lower() == 'n':
@@ -551,7 +589,8 @@ def attempt_capture():
                 if attempts == 1:
                     # And it runs away if you run out of attempts
                     ran_away()
-                    print(f"You have ran out of attempts, the {found_pokemon} ran away.")
+                    print(f"You have ran out of attempts, the {
+                          found_pokemon} ran away.")
                 break
             elif choice.lower() == 'n':
                 ran_away()
@@ -563,6 +602,8 @@ def attempt_capture():
         print("You are not next to a pokemon")
 
 # Function to fight a nearby pokemon
+
+
 def fight():
     # If it is there
     if check_around_x('\033[1;32m!\033[0m'):
@@ -580,28 +621,31 @@ def fight():
         print("\nIt's stats:")
         # And display its stats, to let the player choose whether or not they want to fight it
         pokemon.display_attributes(inventory, pokemon_names, True)
-        
+
         # But if they don't have any pokemon already, it will run away by default
         if len(inventory[0]) == 0:
             print("\nYou do not have a pokemon available to fight yet.")
             ran_away()
             print(f"\nThe {pokemon.get_name()} ran away.")
             return
-        
+
         # Prompt to fight
         while True:
-            choice = input(f"\nDo you want to fight this {pokemon.get_name()}? It will run away if you don't. (Y / N):\t")
+            choice = input(f"\nDo you want to fight this {
+                           pokemon.get_name()}? It will run away if you don't. (Y / N):\t")
             # If yes
             if choice.lower() == 'y':
                 # Show their available pokemon (no backing out now)
                 print("\nYour available pokemon:")
                 for i in range(len(inventory[0])):
                     # And their stats
-                    print(f"\n{i+1}: {inventory[0][i].get_name()} CP: {inventory[0][i].get_cp()} IV: {inventory[0][i].get_iv()}% Shiny?: {inventory[0][i].get_shiny_text()}")
+                    print(f"\n{i+1}: {inventory[0][i].get_name()} CP: {inventory[0][i].get_cp()} IV: {
+                          inventory[0][i].get_iv()}% Shiny?: {inventory[0][i].get_shiny_text()}")
                 while True:
                     try:
                         # Let them choose which one
-                        pokemon_choice = int(input("\nWhich pokemon would you like to use against the enemy?:\t"))
+                        pokemon_choice = int(
+                            input("\nWhich pokemon would you like to use against the enemy?:\t"))
                         # And assign it to 'friendly'
                         friendly = inventory[0][pokemon_choice-1]
                         break
@@ -644,23 +688,26 @@ def fight():
                     old_cp = friendly.get_cp()
                     old_stardust = inventory[2]
                     # Increase CP by some diminishing amount from 50 to 150
-                    friendly.cp += int(random.randint(50, 150)*(1/friendly.number_of_battles_won))
+                    friendly.cp += int(random.randint(50, 150)
+                                       * (1/friendly.number_of_battles_won))
                     # And add some amount of stardust from 800 to 1500
                     inventory[2] += random.randint(800, 1500)
                     # Display results
                     print(f"\nYour {friendly.get_name()} won!")
                     print(f"It gained {friendly.get_cp() - old_cp} CP!")
-                    print(f"You gained {inventory[2] - old_stardust} Stardust!")
+                    print(f"You gained {
+                          inventory[2] - old_stardust} Stardust!")
                     ran_away()
                     return
-                else: # If enemy wins
+                else:  # If enemy wins
                     # We will decrease friendly cp
                     old_cp = friendly.get_cp()
                     # By some amount 30 to 150
                     friendly.cp -= random.randint(30, 150)
                     # Display results
                     print(f"\nYour {friendly.get_name()} lost the battle!")
-                    print(f"It was damaged and lost {old_cp - friendly.get_cp()} CP!")
+                    print(f"It was damaged and lost {
+                          old_cp - friendly.get_cp()} CP!")
                     ran_away()
                     return
 
@@ -674,6 +721,8 @@ def fight():
         print("You are not next to a hostile pokemon.")
 
 # Finally, we will define the run() function
+
+
 def run():
     # Consistently check for...
     while True:
@@ -722,6 +771,7 @@ def run():
             clear_buffer()
             fight()
             print("\nYou can move again...")
+
 
 # Lastly, call the functions
 print_instructions()
